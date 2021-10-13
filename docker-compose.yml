@@ -13,36 +13,40 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - ./mongodb:/data/db
+      - ${mongodb}:/data/db
     networks:
       - mern-net
 
   node:
     container_name: mern-node
-    build: ./
+    build:
+      context: ${project_folder}
+      dockerfile: ${repository_folder}/Dockerfile
     user: "node"
     restart: always
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
-      - ./project:/home/node/app
+      - ${project_folder}:/home/node/app
     networks:
       - mern-net
     command: "node webServer.js"
 
   node_builder:
     container_name: mern-nodebuilder
-    build: ./
+    build:
+      context: ${project_folder}
+      dockerfile: ${repository_folder}/Dockerfile
     user: "node"
     restart: always
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
-      - ./project:/home/node/app
+      - ${project_folder}:/home/node/app
     networks:
       - mern-net
     command: "bash -c 'npm install && npm run build:w'"
