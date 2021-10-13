@@ -45,4 +45,4 @@ services:
       - ./project:/home/node/app
     networks:
       - mern-net
-    command: "npm run build:w"
+    command: "bash -c 'npm install && npm run build:w'"
