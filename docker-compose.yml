@@ -19,7 +19,7 @@ services:
 
   node:
     container_name: mern-node
-    image: node:16.11.1
+    build: ./
     user: "node"
     restart: always
     ports:
@@ -32,3 +32,17 @@ services:
     networks:
       - mern-net
     command: "node webServer.js"
+
+  node_builder:
+    container_name: mern-nodebuilder
+    build: ./
+    user: "node"
+    restart: always
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./project:/home/node/app
+    networks:
+      - mern-net
+    command: "npm run build:w"
