@@ -10,8 +10,8 @@ services:
     image: mongo:5.0.3
     restart: ${restart}
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: ${mongo_root_username}
+      MONGO_INITDB_ROOT_PASSWORD: ${mongo_root_password}
     volumes:
       - ${mongo_path}:/data/db
     networks:
@@ -22,13 +22,13 @@ services:
     build:
       context: ${project_path}
       dockerfile: ${repository_path}/Dockerfile
-    user: "node"
+    user: ${node_user}
     restart: ${restart}
     ports:
       - ${node_host}:${node_port}:3000
     working_dir: /home/node/app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${node_env}
     volumes:
       - ${project_path}:/home/node/app
     networks:
@@ -44,7 +44,7 @@ services:
     restart: ${restart}
     working_dir: /home/node/app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${node_env}
     volumes:
       - ${project_path}:/home/node/app
     networks:
