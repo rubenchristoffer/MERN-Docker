@@ -2,7 +2,7 @@
 Allows you to create MERN-stack based projects using Docker.
 
 ## How to use
-Requires docker-compose v1.29+ installed on your system.
+Requires docker-compose v1.27+ and Docker Engine 17.12+ installed on your system.
 You can install latest docker-compose through pip by running `sudo pip install docker-compose` 
 
 1. Clone repository
