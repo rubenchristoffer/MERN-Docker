@@ -2,51 +2,51 @@ version: "3.4"
 
 networks:
   mern-net:
-    name: mern-net
+    name: ${network_name}
 
 services:
   mongo:
-    container_name: mern-mongo
+    container_name: ${mongo_name}
     image: mongo:5.0.3
-    restart: always
+    restart: ${restart}
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - ${mongodb}:/data/db
+      - ${mongo_path}:/data/db
     networks:
-      - mern-net
+      - ${network_name}
 
   node:
-    container_name: mern-node
+    container_name: ${node_name}
     build:
-      context: ${project_folder}
-      dockerfile: ${repository_folder}/Dockerfile
+      context: ${project_path}
+      dockerfile: ${repository_path}/Dockerfile
     user: "node"
-    restart: always
+    restart: ${restart}
     ports:
-      - 127.0.0.1:3000:3000
+      - ${node_host}:${node_port}:3000
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
-      - ${project_folder}:/home/node/app
+      - ${project_path}:/home/node/app
     networks:
-      - mern-net
-    command: "node webServer.js"
+      - ${network_name}
+    command: "node ${node_args}"
 
   node_builder:
-    container_name: mern-nodebuilder
+    container_name: ${node_builder_name}
     build:
-      context: ${project_folder}
-      dockerfile: ${repository_folder}/Dockerfile
+      context: ${project_path}
+      dockerfile: ${repository_path}/Dockerfile
     user: "node"
-    restart: always
+    restart: ${restart}
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
-      - ${project_folder}:/home/node/app
+      - ${project_path}:/home/node/app
     networks:
-      - mern-net
+      - ${network_name}
     command: "bash -c 'npm install && npm run build:w'"
