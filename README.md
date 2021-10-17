@@ -10,4 +10,4 @@ You can install latest docker-compose through pip by running `sudo pip install d
 1. Modify .env to set correct paths
 1. Run `sudo docker-compose up -d --build` from repository folder to start containers
 1. Website should now be available on port 3000 (or another port if changed in .env)
-1. Run `docker-compose down` to stop containers
+1. Run `sudo docker-compose down` to stop containers
