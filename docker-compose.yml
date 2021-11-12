@@ -19,6 +19,8 @@ services:
       - ${mongo_path}:/data/db
     networks:
       - ${network_name}
+    ports:
+      - 127.0.0.1:27017:27017
 
   node:
     container_name: ${node_name}
